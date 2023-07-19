@@ -4,7 +4,6 @@ __author__ = 'Roberto Valle'
 __email__ = 'roberto.valle@upm.es'
 
 import os
-import cv2
 import numpy as np
 from images_framework.src.alignment import Alignment
 os.environ['PYTHONHASHSEED'] = '0'
@@ -46,22 +45,30 @@ class Dad22Landmarks(Alignment):
 
     def process(self, ann, pred):
         import itertools
+        from pytorch_toolbelt.utils import read_rgb_image
+        from scipy.spatial.transform import Rotation
         from images_framework.src.datasets import Database
         from images_framework.src.annotations import GenericLandmark
+        from .model_training.model.flame import FlameParams, FLAME_CONSTS
+        from .model_training.model.utils import rot_mat_from_6dof
         datasets = [subclass().get_names() for subclass in Database.__subclasses__()]
         idx = [datasets.index(subset) for subset in datasets if self.database in subset]
         parts = Database.__subclasses__()[idx[0]]().get_landmarks()
         indices = list(itertools.chain.from_iterable(parts.values()))
         for img_pred in pred.images:
             # Load image
-            image = cv2.imread(img_pred.filename)
+            image = read_rgb_image(img_pred.filename)
             for obj_pred in img_pred.objects:
                 # Generate prediction
-                predictions = self.model(image)
-                print(predictions)
-                exit(0)
+                predictions = self.model(image)  # 68 2D points, 2.5D projected vertices, 3D vertices, 3DMM params
                 # Save prediction
-                for idx, pt in enumerate(shape.parts()):
-                    label = indices[idx]
-                    lp = list(parts.keys())[next((ids for ids, xs in enumerate(parts.values()) for x in xs if x == label), None)]
-                    obj_pred.add_landmark(GenericLandmark(label, lp, (pt.x, pt.y), True))
+                params_3dmm = predictions['3dmm_params']  # (1, 413)
+                flame_params = FlameParams.from_3dmm(params_3dmm, FLAME_CONSTS)
+                rot_mat = np.squeeze(rot_mat_from_6dof(flame_params.rotation).cpu().numpy())
+                euler = Rotation.from_matrix(rot_mat).as_euler('YXZ', degrees=True)
+                obj_pred.headpose = Rotation.from_euler('YXZ', [euler[0], -euler[1], -euler[2]], degrees=True).as_matrix()
+                obj_pred.headpose[1:3, :] = -obj_pred.headpose[1:3, :]
+                proj_vertices = np.squeeze(predictions['projected_vertices'].cpu().numpy())
+                for idx in indices:
+                    lp = list(parts.keys())[next((ids for ids, xs in enumerate(parts.values()) for x in xs if x == idx), None)]
+                    obj_pred.add_landmark(GenericLandmark(idx, lp, proj_vertices[idx], True))
