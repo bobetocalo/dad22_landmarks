@@ -1,12 +1,10 @@
-from typing import Dict, Any, List, Tuple
 import os
 import yaml
+import numpy as np
+import logging, coloredlogs
+from typing import Dict, Any, List, Tuple
 from hydra.utils import get_original_cwd
 from omegaconf import OmegaConf, DictConfig
-
-import numpy as np
-
-import logging, coloredlogs
 
 
 COLOREDLOGS_FIELD_STYLES = coloredlogs.DEFAULT_FIELD_STYLES

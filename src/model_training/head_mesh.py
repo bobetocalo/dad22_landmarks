@@ -1,9 +1,8 @@
-from typing import Optional, Dict, List
-
 import torch
 import torch.nn as nn
 from torch import Tensor
-from model_training.model.flame import FLAMELayer, FLAME_CONSTS, FlameParams
+from typing import Optional, Dict, List
+from .model.flame import FLAMELayer, FLAME_CONSTS, FlameParams
 
 
 class HeadMesh(nn.Module):

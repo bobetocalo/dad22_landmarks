@@ -1,15 +1,12 @@
+import pickle
+import numpy as np
+import torch
+import torch.nn.functional as F
+import pytorch_toolbelt.utils as pt_utils
+from torch import nn
 from typing import Optional, Union, List
 from smplx.utils import Struct
-from utils import get_relative_path
-import pickle
-
-import numpy as np
-
-import torch
-from torch import nn
-import torch.nn.functional as F
-
-import pytorch_toolbelt.utils as pt_utils
+from images_framework.alignment.dad22_landmarks.src.utils import get_relative_path
 
 
 def load_from_lighting(

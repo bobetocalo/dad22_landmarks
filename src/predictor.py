@@ -1,75 +1,20 @@
-import requests
-from typing import Dict, Any, Tuple, Union, List
-
-import os
 import cv2
-import torch
-from torch import Tensor
 import numpy as np
-
-import logging
 import albumentations as A
 from albumentations.augmentations.geometric import py3round
-
-from utils import load_yaml, get_relative_path
-from model_training.head_mesh import HeadMesh
-from model_training.model.utils import to_device, unravel_index, calculate_paddings
-from model_training.data.config import OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS, OUTPUT_LANDMARKS_HEATMAP
-
-
-logger = logging.getLogger(__name__)
-_FILENAME = "dad_3dheads.trcd"
-_PUBLIC_URL = "https://media.pinatafarm.com/public/research/dad-3dheads/dad_3dheads.trcd"
-
-
-def model_exists() -> bool:
-    return os.path.isfile(os.path.join(os.path.expanduser("~"), ".dad_checkpoints", _FILENAME))
-
-
-def download_model(url: str, retries: int = 5, verify_ssl: bool = True) -> None:
-    """Download an given URL
-        Parameters:
-        ----------
-        url : str
-            URL to download
-        retries : integer, default 5
-            The number of times to attempt the download in case of failure or non 200 return codes
-        verify_ssl : bool, default True
-            Verify SSL certificates.
-        """
-    os.makedirs(os.path.join(os.path.expanduser("~"), ".dad_checkpoints"), exist_ok=True)
-    filename = os.path.join(os.path.expanduser("~"), ".dad_checkpoints", _FILENAME)
-    assert retries >= 0, "Number of retries should be at least 0"
-
-    if not verify_ssl:
-        logger.warning(
-            "Unverified HTTPS request is being made (verify_ssl=False). "
-            "Adding certificate verification is strongly advised.")
-
-    while retries + 1 > 0:
-        try:
-            logger.info("Downloading {} from {}...".format(filename, url))
-            r = requests.get(url, stream=True, verify=verify_ssl)
-            if r.status_code != 200:
-                raise RuntimeError("Failed downloading url {}".format(url))
-            with open(filename, "wb") as f:
-                for chunk in r.iter_content(chunk_size=1024):
-                    if chunk:  # filter out keep-alive new chunks
-                        f.write(chunk)
-            break
-        except Exception as e:
-            retries -= 1
-            if retries <= 0:
-                raise e
-            else:
-                logger.info("download failed, retrying, {} attempt{} left".format(retries, "s" if retries > 1 else ""))
+import torch
+from torch import Tensor
+from typing import Dict, Any, Tuple, Union, List
+from .model_training.head_mesh import HeadMesh
+from .model_training.model.utils import to_device, unravel_index, calculate_paddings
+from .model_training.data.config import OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS, OUTPUT_LANDMARKS_HEATMAP
 
 
 class FaceMeshPredictor:
-    def __init__(self, config: Dict[str, Any], cuda_id: int = 0):
+    def __init__(self, path: str, config: Dict[str, Any], cuda_id: int = 0):
         self.cuda_id = cuda_id
         self.flame_constants = config["constants"]
-        self.model = torch.jit.load(os.path.join(os.path.expanduser('~'), config["model_path"]))
+        self.model = torch.jit.load(path + config["model_path"])
         self.model = to_device(self.model, self.cuda_id).eval()
         self.head_mesh = HeadMesh(self.flame_constants)
         self._img_size = config["img_size"]
@@ -201,13 +146,3 @@ class FaceMeshPredictor:
             ]
         )
         return aug(image=x)["image"]
-
-    @classmethod
-    def dad_3dnet(cls):
-        #yaml_propio = "/home/juanjoflores/TFM/DAD-3DHeads/experiments/train/2023-05-31-17-36-09/experiment_config.yaml"
-        config = load_yaml(get_relative_path("dad_3dnet.yaml", __file__))
-        if not model_exists():
-            logger.info("Downloading the model")
-            download_model(_PUBLIC_URL)
-        return FaceMeshPredictor(config=config)
-

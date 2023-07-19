@@ -1,6 +1,5 @@
 from hydra.utils import instantiate
-
-from model_training.model.utils import load_from_lighting
+from .utils import load_from_lighting
 
 
 def load_model(model_config, consts_config, map_location=None):

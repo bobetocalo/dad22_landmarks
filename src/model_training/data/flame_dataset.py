@@ -9,7 +9,7 @@ from hydra.utils import instantiate
 import albumentations as A
 import pytorch_toolbelt.utils as pt_utils
 
-from model_training.data.config import (
+from .config import (
     IMAGE_FILENAME_KEY,
     SAMPLE_INDEX_KEY,
     INPUT_IMAGE_KEY,
@@ -23,9 +23,9 @@ from model_training.data.config import (
     TARGET_2D_FULL_LANDMARKS,
     TARGET_2D_LANDMARKS_PRESENCE,
 )
-from model_training.data.transforms import get_resize_fn, get_normalize_fn
-from model_training.data.utils import ensure_bbox_boundaries, extend_bbox, read_as_rgb, get_68_landmarks
-from model_training.utils import load_2d_indices, create_logger
+from .transforms import get_resize_fn, get_normalize_fn
+from .utils import ensure_bbox_boundaries, extend_bbox, read_as_rgb, get_68_landmarks
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import load_2d_indices, create_logger
 
 MeshArrays = namedtuple(
     "MeshArrays",

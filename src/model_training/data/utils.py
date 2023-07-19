@@ -1,15 +1,14 @@
-from typing import Tuple, Any, Union
-import torch
-import numpy as np
 import cv2
-from skimage.io import imread as sk_imread
+import torch
 import pickle
+import numpy as np
+from typing import Tuple, Any, Union
+from skimage.io import imread as sk_imread
 from smplx.lbs import find_dynamic_lmk_idx_and_bcoords
 from smplx.utils import Struct
-
-from model_training.model.flame import ROT_COEFFS, JAW_COEFFS, EYE_COEFFS, NECK_COEFFS
-from model_training.utils import create_logger
-from utils import get_relative_path
+from images_framework.alignment.dad22_landmarks.src.model_training.model.flame import ROT_COEFFS, JAW_COEFFS, EYE_COEFFS, NECK_COEFFS
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from images_framework.alignment.dad22_landmarks.src.utils import get_relative_path
 
 
 logger = create_logger(__name__)

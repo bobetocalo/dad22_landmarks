@@ -1,18 +1,14 @@
-from typing import Any, Optional, Union
-from collections import namedtuple
 import numpy as np
+import torch
 import torch.nn as nn
+from typing import Dict, Any, Optional, Union
+from collections import namedtuple
+from torch import Tensor
+from dataclasses import dataclass
 from smplx.lbs import lbs
 from smplx.utils import to_tensor, to_np
 from scipy.spatial.transform import Rotation
-
-from model_training.model.utils import rot_mat_from_6dof, get_flame_model, get_flame_indices
-
-from dataclasses import dataclass
-from typing import Dict
-
-import torch
-from torch import Tensor
+from .utils import rot_mat_from_6dof, get_flame_model, get_flame_indices
 
 FLAME_CONSTS = {
     "shape": 300,
