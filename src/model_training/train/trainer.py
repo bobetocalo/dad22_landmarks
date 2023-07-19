@@ -1,12 +1,16 @@
-import copy
-from typing import Dict, Any, Optional, Callable
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
 
+import copy
 import torch
 from pytorch_lightning import Trainer
-from model_training.train.flame_lightning_model import FlameLightningModel
-from model_training.train.utils import create_trainer
-from model_training.utils import create_logger
 from pytorch_toolbelt.utils import fs
+from typing import Dict, Any, Optional, Callable
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from .flame_lightning_model import FlameLightningModel
+from .utils import create_trainer
 
 
 class DAD3DTrainer:

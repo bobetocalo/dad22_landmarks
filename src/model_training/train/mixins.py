@@ -1,24 +1,18 @@
-from typing import Dict, Any, Tuple, Union, Optional
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
+
 import cv2
 import torch
 import numpy as np
-
-from model_training.data.config import (
-    TARGET_3D_MODEL_VERTICES,
-    TARGET_2D_LANDMARKS,
-    TARGET_LANDMARKS_HEATMAP,
-    OUTPUT_LANDMARKS_HEATMAP,
-    OUTPUT_3DMM_PARAMS,
-    OUTPUT_2D_LANDMARKS,
-    TARGET_2D_FULL_LANDMARKS,
-    TARGET_2D_LANDMARKS_PRESENCE,
-    INPUT_BBOX_KEY,
-)
-from model_training.model.flame import uint8_to_float32
-from model_training.data import INPUT_IMAGE_KEY
-from model_training.train.utils import any2device
 from pytorch_toolbelt.utils.torch_utils import rgb_image_from_tensor
 from pytorch_toolbelt.utils.visualization import vstack_autopad, vstack_header
+from typing import Dict, Any, Tuple, Union, Optional
+from images_framework.alignment.dad22_landmarks.src.model_training.data.config import (TARGET_3D_MODEL_VERTICES, TARGET_2D_LANDMARKS, TARGET_LANDMARKS_HEATMAP, OUTPUT_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS, TARGET_2D_FULL_LANDMARKS, TARGET_2D_LANDMARKS_PRESENCE, INPUT_BBOX_KEY)
+from images_framework.alignment.dad22_landmarks.src.model_training.model.flame import uint8_to_float32
+from images_framework.alignment.dad22_landmarks.src.model_training.data import INPUT_IMAGE_KEY
+from .utils import any2device
 
 
 class KeypointsDataMixin:

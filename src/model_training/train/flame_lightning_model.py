@@ -1,36 +1,29 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
+
 import os
-from joblib import cpu_count
-import typing
-from typing import Dict, Any, Optional, Tuple, List, Union, Callable
-import numpy as np
 import torch
-from torch.utils.data import DataLoader, Dataset, DistributedSampler, ConcatDataset
-from torchmetrics import MetricCollection
+import numpy as np
 import pytorch_lightning as pl
+from joblib import cpu_count
+from torchmetrics import MetricCollection
+from typing import Dict, Any, Optional, Tuple, List, Union, Callable, cast
+from torch.utils.data import DataLoader, Dataset, DistributedSampler, ConcatDataset
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.loggers.base import DummyLogger
-
-from model_training.data.config import (
-    TARGET_2D_LANDMARKS,
-    OUTPUT_LANDMARKS_HEATMAP,
-    TARGET_LANDMARKS_HEATMAP,
-    OUTPUT_3DMM_PARAMS,
-    TARGET_3D_MODEL_VERTICES,
-    OUTPUT_2D_LANDMARKS,
-    TARGET_2D_FULL_LANDMARKS,
-    TARGET_2D_LANDMARKS_PRESENCE,
-    INPUT_BBOX_KEY,
-)
-from model_training.model.utils import unravel_index, normalize_to_cube, load_from_lighting
-from model_training.head_mesh import HeadMesh
-from model_training.metrics.iou import SoftIoUMetric
-from model_training.metrics.keypoints import FailureRate, KeypointsNME
-from model_training.train.loss_module import LossModule
-from model_training.train.mixins import KeypointsDataMixin, KeypointsVisualizationMixin
-from model_training.train.optimizers import get_optimizer
-from model_training.train.schedulers import get_scheduler
-from model_training.train.utils import any2device
-from model_training.utils import create_logger
+from images_framework.alignment.dad22_landmarks.src.model_training.data.config import (TARGET_2D_LANDMARKS, OUTPUT_LANDMARKS_HEATMAP, TARGET_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, TARGET_3D_MODEL_VERTICES, OUTPUT_2D_LANDMARKS, TARGET_2D_FULL_LANDMARKS, TARGET_2D_LANDMARKS_PRESENCE, INPUT_BBOX_KEY)
+from images_framework.alignment.dad22_landmarks.src.model_training.model.utils import unravel_index, normalize_to_cube, load_from_lighting
+from images_framework.alignment.dad22_landmarks.src.model_training.head_mesh import HeadMesh
+from images_framework.alignment.dad22_landmarks.src.model_training.metrics.iou import SoftIoUMetric
+from images_framework.alignment.dad22_landmarks.src.model_training.metrics.keypoints import FailureRate, KeypointsNME
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from .loss_module import LossModule
+from .mixins import KeypointsDataMixin, KeypointsVisualizationMixin
+from .optimizers import get_optimizer
+from .schedulers import get_scheduler
+from .utils import any2device
 
 
 logger = create_logger(__name__)
@@ -275,7 +268,7 @@ class FlameLightningModel(pl.LightningModule, KeypointsDataMixin, KeypointsVisua
 
         if self.trainer.global_step < num_warmup_steps:
             lr_scale = min(1.0, float(self.trainer.global_step + 1) / num_warmup_steps)
-            optimizer = typing.cast(torch.optim.Optimizer, optimizer)
+            optimizer = cast(torch.optim.Optimizer, optimizer)
             optimizer_idx = optimizer_idx if optimizer_idx is not None else 0
             for pg_index, pg in enumerate(optimizer.param_groups):
                 pg["lr"] = lr_scale * self._initial_learning_rates[optimizer_idx][pg_index]

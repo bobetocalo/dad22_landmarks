@@ -1,14 +1,17 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
+
 import copy
 import math
-from typing import Any, Dict, List
-
 import torch.optim as optim
-from omegaconf import OmegaConf
-from torch.optim import lr_scheduler
 import torch.optim as pytorch_optim
+from torch.optim import lr_scheduler
+from omegaconf import OmegaConf
 from hydra.utils import instantiate
-
-from model_training.utils import create_logger
+from typing import Any, Dict, List
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
 
 logger = create_logger(__name__)
 

@@ -1,14 +1,17 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
+
 import os
-from typing import Dict, Any, List
-
-import numpy as np
 import torch
-from torch.types import Device
+import numpy as np
 import pytorch_lightning as pl
-from model_training.utils import create_logger
-
+from torch.types import Device
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import TensorBoardLogger, LightningLoggerBase
+from typing import Dict, Any, List
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
 
 logger = create_logger(__file__)
 
@@ -30,10 +33,7 @@ def get_callbacks(config: Dict[str, Any]) -> List[pl.Callback]:
     """
     Return callbacks, order matters
     """
-    from model_training.train.callbacks import (
-        ModelCheckpointCallback,
-        EarlyStoppingCallback,
-    )
+    from .callbacks import (ModelCheckpointCallback, EarlyStoppingCallback)
 
     callback_classes = [
         ModelCheckpointCallback,

@@ -19,6 +19,7 @@ class Dad22Landmarks(Alignment):
         self.path = path
         self.model = None
         self.gpu = None
+        self.cfg = None
 
     def parse_options(self, params):
         unknown = super().parse_options(params)
@@ -26,12 +27,44 @@ class Dad22Landmarks(Alignment):
         parser = argparse.ArgumentParser(prog='Dad22Landmarks', add_help=False)
         parser.add_argument('--gpu', dest='gpu', type=int, action='append',
                             help='GPU ID (negative value indicates CPU).')
+        parser.add_argument('--cfg', dest='cfg', type=str,
+                            help='Training configuration filename.')
         args, unknown = parser.parse_known_args(unknown)
         print(parser.format_usage())
         self.gpu = args.gpu
+        self.cfg = args.cfg
 
     def train(self, anns_train, anns_valid):
+        import yaml
+        import hydra
+        from omegaconf import OmegaConf
+        from .model_training.data import FlameDataset
+        from .model_training.model import load_model
+        from .model_training.train.trainer import DAD3DTrainer
+        from .model_training.train.flame_lightning_model import FlameLightningModel
+        # Prepare experiment
         print('Train model')
+        experiment_dir = self.path+'logs/'
+        if not os.path.exists(experiment_dir):
+            os.mkdir(experiment_dir)
+        hydra.initialize(config_path='model_training/config')
+        hydra_config = hydra.compose(config_name=self.cfg)
+        OmegaConf.set_struct(hydra_config, False)
+        hydra_config['yaml_path'] = os.path.join(experiment_dir, self.cfg)
+        hydra_config['experiment']['folder'] = experiment_dir
+        # print(OmegaConf.to_yaml(hydra_config, resolve=True))
+        config = yaml.load(OmegaConf.to_yaml(hydra_config, resolve=True), Loader=yaml.FullLoader)
+        with open(hydra_config['yaml_path'], 'w') as ofs:
+            OmegaConf.save(config=config, f=ofs.name)
+        ofs.close()
+        print('Experiment dir: %s' % config['experiment']['folder'])
+        # Train
+        train_dataset = FlameDataset.from_config(config=config['train'])
+        val_dataset = FlameDataset.from_config(config=config['val'])
+        model = load_model(config['model'], config['constants'])
+        dad3d_net = FlameLightningModel(model=model, config=config, train=train_dataset, val=val_dataset)
+        dad3d_trainer = DAD3DTrainer(dad3d_net, config)
+        dad3d_trainer.fit()
 
     def load(self, mode):
         from images_framework.src.constants import Modes
@@ -40,8 +73,8 @@ class Dad22Landmarks(Alignment):
         # Set up a neural network to train
         print('Load model')
         if mode is Modes.TEST:
-            config = load_yaml(self.path + 'data/' + self.database + '.yaml')
-            self.model = FaceMeshPredictor(self.path + 'data/', config=config)
+            config = load_yaml(self.path+'data/'+self.database+'.yaml')
+            self.model = FaceMeshPredictor(self.path+'data/', config=config)
 
     def process(self, ann, pred):
         import itertools
