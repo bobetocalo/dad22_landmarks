@@ -1,12 +1,16 @@
-from typing import Dict, Any
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
 
 import torch
 import torch.nn as nn
-from model_training.data.config import OUTPUT_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS
-from model_training.model.encoders import get_encoder
-from model_training.model.bifpn import BiFPN
-from model_training.model.layers import IdentityLayer
 from torch.nn import functional as F
+from typing import Dict, Any
+from images_framework.alignment.dad22_landmarks.src.model_training.data.config import OUTPUT_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS
+from .encoders import get_encoder
+from .bifpn import BiFPN
+from .layers import IdentityLayer
 
 __all__ = ["FlameRegression"]
 

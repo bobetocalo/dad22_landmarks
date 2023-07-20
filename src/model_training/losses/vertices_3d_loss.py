@@ -1,9 +1,13 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
+
 import torch
 from torch import nn, Tensor
-from model_training.head_mesh import HeadMesh
-from model_training.model.utils import normalize_to_cube
-from math import pi
-from ..utils import indices_reweighing
+from images_framework.alignment.dad22_landmarks.src.model_training.head_mesh import HeadMesh
+from images_framework.alignment.dad22_landmarks.src.model_training.model.utils import normalize_to_cube
+from images_framework.alignment.dad22_landmarks.src.model_training.utils import indices_reweighing
 
 
 __all__ = ["Vertices3DLoss"]

@@ -1,11 +1,14 @@
-from typing import cast, Any, Optional, Tuple, Union, Dict
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
 
 import torch
-from torch import Tensor
-import torch.nn as nn
-from torch.nn import functional as F
-
 import pytorch_toolbelt.modules as pt_modules
+import torch.nn as nn
+from torch import Tensor
+from torch.nn import functional as F
+from typing import cast, Any, Tuple, Union, Dict
 
 
 def get_conv_block(conv_type: str) -> nn.Module:

@@ -1,9 +1,13 @@
-import os
-from typing import Any, List
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
 
+import os
 import torch.nn as nn
+from typing import Any, List
 from pytorchcv.model_provider import get_model
-from utils import load_yaml
+from images_framework.alignment.dad22_landmarks.src.utils import load_yaml
 
 
 class Encoder(nn.Module):

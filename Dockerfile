@@ -35,4 +35,4 @@ SHELL ["conda", "run", "-n", "dad22", "/bin/bash", "-c"]
 # Install dependencies
 RUN conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge
 RUN pip install numpy==1.22.0 opencv-python coloredlogs albumentations==1.0.0 pytorch-toolbelt==0.5.0 hydra-core==1.1.0 smplx==0.1.26 chumpy==0.70
-# RUN pip install tqdm scikit-learn rasterio pytorch-lightning==1.6.0 torch_optimizer==0.1.0
+# RUN pip install tqdm scikit-learn rasterio pytorch-lightning==1.6.0 torch_optimizer==0.1.0 pytorchcv==0.0.65 timm==0.4.5

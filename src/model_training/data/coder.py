@@ -1,7 +1,11 @@
-from typing import Dict, Any
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+__author__ = 'Roberto Valle'
+__email__ = 'roberto.valle@upm.es'
 
 import numpy as np
-from model_training.data.utils import draw_gaussian
+from typing import Dict, Any
+from .utils import draw_gaussian
 
 
 class HeatmapCoder:

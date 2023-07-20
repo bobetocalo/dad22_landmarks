@@ -1,4 +1,4 @@
-_target_: model_training.model.flame_regression.FlameRegression
+_target_: images_framework.alignment.dad22_landmarks.src.model_training.model.flame_regression.FlameRegression
 model_config:
   backbone: resnet50
   pretrained: True

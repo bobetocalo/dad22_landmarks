@@ -6,7 +6,7 @@ criterions:
     output_key: OUTPUT_LANDMARKS_HEATMAP
     weight: 1.
     loss:
-      _target_: model_training.losses.IoULoss
+      _target_: images_framework.alignment.dad22_landmarks.src.model_training.losses.IoULoss
 
   -
     name: vertices3d_loss
@@ -14,7 +14,7 @@ criterions:
     output_key: OUTPUT_3DMM_PARAMS
     weight: 50.
     loss:
-      _target_: model_training.losses.Vertices3DLoss
+      _target_: images_framework.alignment.dad22_landmarks.src.model_training.losses.Vertices3DLoss
       criterion: l2 # choose from {l1, l2, smooth_l1}
       batch_size: ${batch_size}
       consts: ${constants}
@@ -28,7 +28,7 @@ criterions:
     output_key: OUTPUT_3DMM_PARAMS
     weight: 0.05
     loss:
-      _target_: model_training.losses.ReprojectionLoss
+      _target_: images_framework.alignment.dad22_landmarks.src.model_training.losses.ReprojectionLoss
       criterion: smooth_l1
       batch_size: ${batch_size}
       consts: ${constants}
@@ -46,5 +46,5 @@ criterions:
       - TARGET_2D_LANDMARKS_PRESENCE
     weight: 100.
     loss:
-      _target_: model_training.losses.LandmarksLossWVisibility
+      _target_: images_framework.alignment.dad22_landmarks.src.model_training.losses.LandmarksLossWVisibility
       criterion: smooth_l1

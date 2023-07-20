@@ -2,7 +2,7 @@
 
 hydra:
   run:
-    dir: ./experiments/train/${now:%Y-%m-%d-%H-%M-%S}
+    dir: ../logs/${now:%Y-%m-%d-%H-%M-%S}
 
 defaults:
   - backend: 1gpu
