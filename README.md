@@ -2,7 +2,11 @@
 
 #### Requisites
 - images_framework https://github.com/bobetocalo/images_framework
-- dlib
+- Pytorch (1.9.0)
+- Pytorch-toolbelt (0.5.0)
+- Hydra (1.1.0)
+- SMPL-X (0.1.26)
+- Chumpy (0.70)
 
 #### Installation
 This repository must be located inside the following directory:
