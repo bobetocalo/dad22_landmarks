@@ -27,11 +27,11 @@ usage: Alignment --database DATABASE
 
 * Use the --database option to select the database model.
 ```
-usage: Dad22Landmarks [--pose POSE]
+usage: Dad22Landmarks [--gpu GPU] [--cfg CFG]
 ```
 
-* Use the --pose option to choose pose index for simultaneous train.
+* Use the --gpu option to set the GPU identifier (negative value indicates CPU mode).
+* Use the --cfg option to set the experiment configure file name.
 ```
-> python images_framework/alignment/dad22_landmarks/test/dad22_landmarks_test.py --input-data images_framework/alignment/dad22_landmarks/test/example.tif --database aflw --save-image
+> python images_framework/alignment/dad22_landmarks/test/dad22_landmarks_test.py --input-data images_framework/alignment/dad22_landmarks/test/example.tif --database dad --gpu 0 --save-image
 ```
-
