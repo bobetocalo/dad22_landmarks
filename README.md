@@ -1,7 +1,7 @@
 # Landmark Detection using DAD-3DHeads CVPR (2022)
 
 #### Requisites
-- images_framework https://github.com/bobetocalo/images_framework
+- images_framework https://github.com/pcr-upm/images_framework
 - Pytorch (1.9.0)
 - Pytorch-toolbelt (0.5.0)
 - Hydra (1.1.0)
