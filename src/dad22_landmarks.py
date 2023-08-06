@@ -59,7 +59,11 @@ class Dad22Landmarks(Alignment):
         ofs.close()
         print('Experiment dir: %s' % config['experiment']['folder'])
         # Train
+        config['train']['dataset_root'] = '/home/database/reconstruction/faces/dad-3dheads/train/images'
+        config['train']['ann_path'] = '/home/database/reconstruction/faces/dad-3dheads/train/train.json'
         train_dataset = FlameDataset.from_config(config=config['train'])
+        config['val']['dataset_root'] = '/home/database/reconstruction/faces/dad-3dheads/val/images'
+        config['val']['ann_path'] = '/home/database/reconstruction/faces/dad-3dheads/val/val.json'
         val_dataset = FlameDataset.from_config(config=config['val'])
         model = load_model(config['model'], config['constants'])
         dad3d_net = FlameLightningModel(model=model, config=config, train=train_dataset, val=val_dataset)

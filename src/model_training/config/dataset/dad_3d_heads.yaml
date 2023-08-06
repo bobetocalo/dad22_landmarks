@@ -1,9 +1,5 @@
 # @package _global_
-dataset_root: /home/database/reconstruction/faces/dad-3dheads
-
 train:
-    dataset_root: ${dataset_root}/train/images
-    ann_path: ${dataset_root}/train/train.json
     img_size: 256
     stride: 4
     num_classes: 68
@@ -23,8 +19,6 @@ train:
       resize_mode: longest_max_size
 
 val:
-    dataset_root: ${dataset_root}/val/images
-    ann_path: ${dataset_root}/val/val.json
     img_size: ${train.img_size}
     stride: ${train.stride}
     num_classes: ${train.num_classes}
