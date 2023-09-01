@@ -81,6 +81,7 @@ class Dad22Landmarks(Alignment):
             self.model = FaceMeshPredictor(self.path+'data/', config=config)
 
     def process(self, ann, pred):
+        import cv2
         import itertools
         from pytorch_toolbelt.utils import read_rgb_image
         from scipy.spatial.transform import Rotation
@@ -97,7 +98,13 @@ class Dad22Landmarks(Alignment):
             image = read_rgb_image(img_pred.filename)
             for obj_pred in img_pred.objects:
                 # Generate prediction
-                predictions = self.model(image)  # 68 2D points, 2.5D projected vertices, 3D vertices, 3DMM params
+                T = np.zeros((2, 3), dtype=float)
+                T[0, 0], T[0, 1], T[0, 2] = 1, 0, -obj_pred.bb[0]
+                T[1, 0], T[1, 1], T[1, 2] = 0, 1, -obj_pred.bb[1]
+                bbox_width = obj_pred.bb[2] - obj_pred.bb[0]
+                bbox_height = obj_pred.bb[3] - obj_pred.bb[1]
+                warped_image = cv2.warpAffine(image, T, (int(round(bbox_width)), int(round(bbox_height))))
+                predictions = self.model(warped_image)  # 68 2D points, 2.5D proj vertices, 3D vertices, 3DMM params
                 # Save prediction
                 params_3dmm = predictions['3dmm_params']  # (1, 413)
                 flame_params = FlameParams.from_3dmm(params_3dmm, FLAME_CONSTS)
@@ -108,4 +115,6 @@ class Dad22Landmarks(Alignment):
                 proj_vertices = np.squeeze(predictions['projected_vertices'].cpu().numpy())
                 for idx in indices:
                     lp = list(parts.keys())[next((ids for ids, xs in enumerate(parts.values()) for x in xs if x == idx), None)]
-                    obj_pred.add_landmark(GenericLandmark(idx, lp, proj_vertices[idx], True))
+                    pt_x = proj_vertices[idx][0] + obj_pred.bb[0]
+                    pt_y = proj_vertices[idx][1] + obj_pred.bb[1]
+                    obj_pred.add_landmark(GenericLandmark(idx, lp, (pt_x, pt_y), True))

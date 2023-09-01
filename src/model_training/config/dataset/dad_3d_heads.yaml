@@ -4,7 +4,7 @@ train:
     stride: 4
     num_classes: 68
     keypoints:
-      2d_subset_name: multipie_keypoints #keypoints_191 #keypoints_445
+      2d_subset_name: multipie_keypoints #multipie_keypoints #keypoints_191 #keypoints_445
       2d_subset_path: images_framework/alignment/dad22_landmarks/src/model_training/model/static/face_keypoints/${train.keypoints.2d_subset_name}
     flame_indices:
       folder: images_framework/alignment/dad22_landmarks/src/model_training/model/static/flame_indices
