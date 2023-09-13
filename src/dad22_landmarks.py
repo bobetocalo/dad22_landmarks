@@ -87,6 +87,7 @@ class Dad22Landmarks(Alignment):
         from scipy.spatial.transform import Rotation
         from images_framework.src.datasets import Database
         from images_framework.src.annotations import GenericLandmark
+        from images_framework.alignment.landmarks import lps
         from .model_training.model.flame import FlameParams, FLAME_CONSTS
         from .model_training.model.utils import rot_mat_from_6dof
         datasets = [subclass().get_names() for subclass in Database.__subclasses__()]
@@ -117,4 +118,4 @@ class Dad22Landmarks(Alignment):
                     lp = list(parts.keys())[next((ids for ids, xs in enumerate(parts.values()) for x in xs if x == idx), None)]
                     pt_x = proj_vertices[idx][0] + obj_pred.bb[0]
                     pt_y = proj_vertices[idx][1] + obj_pred.bb[1]
-                    obj_pred.add_landmark(GenericLandmark(idx, lp, (pt_x, pt_y), True))
+                    obj_pred.add_landmark(GenericLandmark(idx, lp, (pt_x, pt_y), True), lps[type(lp)])
