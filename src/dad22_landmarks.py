@@ -99,11 +99,15 @@ class Dad22Landmarks(Alignment):
             image = read_rgb_image(img_pred.filename)
             for obj_pred in img_pred.objects:
                 # Generate prediction
+                max_size = max(obj_pred.bb[0], obj_pred.bb[1])
+                bbox_scale = 0.2
+                shift = max_size * bbox_scale
+                bbox_enlarged = (obj_pred.bb[0]-shift, obj_pred.bb[1]-shift, obj_pred.bb[2]+shift, obj_pred.bb[3]+shift)
                 T = np.zeros((2, 3), dtype=float)
-                T[0, 0], T[0, 1], T[0, 2] = 1, 0, -obj_pred.bb[0]
-                T[1, 0], T[1, 1], T[1, 2] = 0, 1, -obj_pred.bb[1]
-                bbox_width = obj_pred.bb[2] - obj_pred.bb[0]
-                bbox_height = obj_pred.bb[3] - obj_pred.bb[1]
+                T[0, 0], T[0, 1], T[0, 2] = 1, 0, -bbox_enlarged[0]
+                T[1, 0], T[1, 1], T[1, 2] = 0, 1, -bbox_enlarged[1]
+                bbox_width = bbox_enlarged[2] - bbox_enlarged[0]
+                bbox_height = bbox_enlarged[3] - bbox_enlarged[1]
                 warped_image = cv2.warpAffine(image, T, (int(round(bbox_width)), int(round(bbox_height))))
                 predictions = self.model(warped_image)  # 68 2D points, 2.5D proj vertices, 3D vertices, 3DMM params
                 # Save prediction
@@ -116,6 +120,6 @@ class Dad22Landmarks(Alignment):
                 proj_vertices = np.squeeze(predictions['projected_vertices'].cpu().numpy())
                 for idx in indices:
                     lp = list(parts.keys())[next((ids for ids, xs in enumerate(parts.values()) for x in xs if x == idx), None)]
-                    pt_x = proj_vertices[idx][0] + obj_pred.bb[0]
-                    pt_y = proj_vertices[idx][1] + obj_pred.bb[1]
+                    pt_x = proj_vertices[idx][0] + bbox_enlarged[0]
+                    pt_y = proj_vertices[idx][1] + bbox_enlarged[1]
                     obj_pred.add_landmark(GenericLandmark(idx, lp, (pt_x, pt_y), True), lps[type(lp)])
