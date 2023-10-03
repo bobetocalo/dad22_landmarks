@@ -99,7 +99,7 @@ class Dad22Landmarks(Alignment):
             image = read_rgb_image(img_pred.filename)
             for obj_pred in img_pred.objects:
                 # Generate prediction
-                bbox_scale = 1.1
+                bbox_scale = 1.3
                 bbox_width, bbox_height = obj_pred.bb[2]-obj_pred.bb[0], obj_pred.bb[3]-obj_pred.bb[1]
                 shift_width = int(round(((bbox_width*bbox_scale)-bbox_width)*0.5))
                 shift_height = int(round(((bbox_height*bbox_scale)-bbox_height)*0.5))
