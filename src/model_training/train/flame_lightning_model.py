@@ -13,12 +13,12 @@ from typing import Dict, Any, Optional, Tuple, List, Union, Callable, cast
 from torch.utils.data import DataLoader, Dataset, DistributedSampler, ConcatDataset
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.loggers.base import DummyLogger
-from images_framework.alignment.dad22_landmarks.src.model_training.data.config import (TARGET_2D_LANDMARKS, OUTPUT_LANDMARKS_HEATMAP, TARGET_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, TARGET_3D_MODEL_VERTICES, OUTPUT_2D_LANDMARKS, TARGET_2D_FULL_LANDMARKS, TARGET_2D_LANDMARKS_PRESENCE, INPUT_BBOX_KEY)
-from images_framework.alignment.dad22_landmarks.src.model_training.model.utils import unravel_index, normalize_to_cube, load_from_lighting
-from images_framework.alignment.dad22_landmarks.src.model_training.head_mesh import HeadMesh
-from images_framework.alignment.dad22_landmarks.src.model_training.metrics.iou import SoftIoUMetric
-from images_framework.alignment.dad22_landmarks.src.model_training.metrics.keypoints import FailureRate, KeypointsNME
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from src.model_training.data.config import (TARGET_2D_LANDMARKS, OUTPUT_LANDMARKS_HEATMAP, TARGET_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, TARGET_3D_MODEL_VERTICES, OUTPUT_2D_LANDMARKS, TARGET_2D_FULL_LANDMARKS, TARGET_2D_LANDMARKS_PRESENCE, INPUT_BBOX_KEY)
+from src.model_training.model.utils import unravel_index, normalize_to_cube, load_from_lighting
+from src.model_training.head_mesh import HeadMesh
+from src.model_training.metrics.iou import SoftIoUMetric
+from src.model_training.metrics.keypoints import FailureRate, KeypointsNME
+from src.model_training.utils import create_logger
 from .loss_module import LossModule
 from .mixins import KeypointsDataMixin, KeypointsVisualizationMixin
 from .optimizers import get_optimizer

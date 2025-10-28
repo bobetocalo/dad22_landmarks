@@ -8,7 +8,7 @@ import torch
 from pytorch_lightning import Trainer
 from pytorch_toolbelt.utils import fs
 from typing import Dict, Any, Optional, Callable
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from src.model_training.utils import create_logger
 from .flame_lightning_model import FlameLightningModel
 from .utils import create_trainer
 

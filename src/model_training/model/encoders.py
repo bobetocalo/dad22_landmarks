@@ -7,7 +7,7 @@ import os
 import torch.nn as nn
 from typing import Any, List
 from pytorchcv.model_provider import get_model
-from images_framework.alignment.dad22_landmarks.src.utils import load_yaml
+from src.utils import load_yaml
 
 
 class Encoder(nn.Module):

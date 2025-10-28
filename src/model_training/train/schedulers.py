@@ -11,7 +11,7 @@ from torch.optim import lr_scheduler
 from omegaconf import OmegaConf
 from hydra.utils import instantiate
 from typing import Any, Dict, List
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from src.model_training.utils import create_logger
 
 logger = create_logger(__name__)
 

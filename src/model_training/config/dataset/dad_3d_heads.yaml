@@ -5,15 +5,15 @@ train:
     num_classes: 68
     keypoints:
       2d_subset_name: multipie_keypoints #multipie_keypoints #keypoints_191 #keypoints_445
-      2d_subset_path: images_framework/alignment/dad22_landmarks/src/model_training/model/static/face_keypoints/${train.keypoints.2d_subset_name}
+      2d_subset_path: src/model_training/model/static/face_keypoints/${train.keypoints.2d_subset_name}
     flame_indices:
-      folder: images_framework/alignment/dad22_landmarks/src/model_training/model/static/flame_indices
+      folder: src/model_training/model/static/flame_indices
       files:
         head: head.npy
         face_w_ears: face_w_ears.npy
         face: face.npy
     coder:
-      _target_: images_framework.alignment.dad22_landmarks.src.model_training.data.coder.HeatmapCoder
+      _target_: src.model_training.data.coder.HeatmapCoder
     transform:
       normalize: imagenet
       resize_mode: longest_max_size

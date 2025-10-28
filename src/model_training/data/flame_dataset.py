@@ -25,7 +25,7 @@ from .config import (
 )
 from .transforms import get_resize_fn, get_normalize_fn
 from .utils import ensure_bbox_boundaries, extend_bbox, read_as_rgb, get_68_landmarks
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import load_2d_indices, create_logger
+from src.model_training.utils import load_2d_indices, create_logger
 
 MeshArrays = namedtuple(
     "MeshArrays",

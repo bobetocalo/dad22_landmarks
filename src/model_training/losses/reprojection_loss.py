@@ -6,8 +6,8 @@ __email__ = 'roberto.valle@upm.es'
 import torch
 from torch import nn, Tensor
 from typing import List, Union
-from images_framework.alignment.dad22_landmarks.src.model_training.head_mesh import HeadMesh
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import indices_reweighing
+from src.model_training.head_mesh import HeadMesh
+from src.model_training.utils import indices_reweighing
 
 __all__ = ["ReprojectionLoss"]
 losses = {"l1": nn.L1Loss, "l2": nn.MSELoss, "smooth_l1": nn.SmoothL1Loss}

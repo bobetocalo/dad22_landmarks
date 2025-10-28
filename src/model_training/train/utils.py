@@ -11,7 +11,7 @@ from torch.types import Device
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import TensorBoardLogger, LightningLoggerBase
 from typing import Dict, Any, List
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from src.model_training.utils import create_logger
 
 logger = create_logger(__file__)
 

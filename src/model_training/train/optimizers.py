@@ -8,7 +8,7 @@ import torch.optim as pytorch_optim
 import torch_optimizer as optim
 from torch import nn
 from typing import Dict, Any, Callable, List
-from images_framework.alignment.dad22_landmarks.src.model_training.utils import create_logger
+from src.model_training.utils import create_logger
 
 _torch_optimizers = {
     "adam": pytorch_optim.Adam,

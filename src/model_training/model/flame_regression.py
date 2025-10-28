@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 from typing import Dict, Any
-from images_framework.alignment.dad22_landmarks.src.model_training.data.config import OUTPUT_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS
+from src.model_training.data.config import OUTPUT_LANDMARKS_HEATMAP, OUTPUT_3DMM_PARAMS, OUTPUT_2D_LANDMARKS
 from .encoders import get_encoder
 from .bifpn import BiFPN
 from .layers import IdentityLayer

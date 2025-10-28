@@ -6,7 +6,7 @@ import pytorch_toolbelt.utils as pt_utils
 from torch import nn
 from typing import Optional, Union, List
 from smplx.utils import Struct
-from images_framework.alignment.dad22_landmarks.src.utils import get_relative_path
+from src.utils import get_relative_path
 
 
 def load_from_lighting(
