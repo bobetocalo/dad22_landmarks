@@ -89,7 +89,7 @@ class Dad22Landmarks(Alignment):
         from scipy.spatial.transform import Rotation
         from images_framework.src.datasets import Database
         from images_framework.src.annotations import GenericLandmark
-        from images_framework.alignment.landmarks import lps
+        from images_framework.regression.alignment.landmarks import lps
         from .model_training.model.flame import FlameParams, FLAME_CONSTS
         from .model_training.model.utils import rot_mat_from_6dof
         datasets = [subclass().get_names() for subclass in Database.__subclasses__()]
