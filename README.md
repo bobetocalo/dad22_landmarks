@@ -1,12 +1,7 @@
 # Landmark Detection using DAD-3DHeads CVPR (2022)
 
 #### Requisites
-- images-framework
-- Pytorch (1.9.0)
-- Pytorch-toolbelt (0.5.0)
-- Hydra (1.1.0)
-- SMPL-X (0.1.26)
-- Chumpy (0.70)
+The required dependencies are installed in the [`Dockerfile`](./Dockerfile#L33-L36).
 
 #### Usage
 ```

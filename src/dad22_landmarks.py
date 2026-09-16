@@ -7,7 +7,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')))
 import numpy as np
-from images_framework.src.alignment import Alignment
+from pcr_framework.src.alignment import Alignment
 os.environ['PYTHONHASHSEED'] = '0'
 np.random.seed(42)
 
@@ -73,7 +73,7 @@ class Dad22Landmarks(Alignment):
         dad3d_trainer.fit()
 
     def load(self, mode):
-        from images_framework.src.constants import Modes
+        from pcr_framework.src.constants import Modes
         from .utils import load_yaml
         from .predictor import FaceMeshPredictor
         # Set up a neural network to train
@@ -87,9 +87,9 @@ class Dad22Landmarks(Alignment):
         import itertools
         from pytorch_toolbelt.utils import read_rgb_image
         from scipy.spatial.transform import Rotation
-        from images_framework.src.datasets import Database
-        from images_framework.src.annotations import GenericLandmark
-        from images_framework.regression.alignment.landmarks import lps
+        from pcr_framework.src.datasets import Database
+        from pcr_framework.src.annotations import GenericLandmark
+        from pcr_framework.regression.alignment.landmarks import lps
         from .model_training.model.flame import FlameParams, FLAME_CONSTS
         from .model_training.model.utils import rot_mat_from_6dof
         datasets = [subclass().get_names() for subclass in Database.__subclasses__()]

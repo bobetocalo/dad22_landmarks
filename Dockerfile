@@ -31,6 +31,6 @@ ENV PATH /home/username/conda/envs/dad22/bin:/home/username/conda/bin:$PATH
 SHELL ["conda", "run", "-n", "dad22", "/bin/bash", "-c"]
 # Install dependencies
 RUN conda install pytorch==1.9.0 torchvision==0.10.0 torchmetrics==0.11.4 torch-optimizer==0.1.0 pytorch-lightning==1.6.0 cudatoolkit=11.3 -c conda-forge
-RUN pip install "mkl==2023.1.0" images-framework pytorch-toolbelt==0.5.0 coloredlogs albumentations==1.0.0 hydra-core==1.1.0 smplx==0.1.26
+RUN pip install "mkl==2023.1.0" pcr-framework pytorch-toolbelt==0.5.0 coloredlogs albumentations==1.0.0 hydra-core==1.1.0 smplx==0.1.26
 RUN pip install --force-reinstall "numpy==1.23.5"
 RUN pip install --no-build-isolation chumpy==0.70 
