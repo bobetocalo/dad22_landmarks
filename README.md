@@ -1,7 +1,7 @@
 # Landmark Detection using DAD-3DHeads CVPR (2022)
 
 #### Requisites
-The required dependencies are installed in the [`Dockerfile`](./Dockerfile#L33-L36).
+The required dependencies are installed in the [`Dockerfile`](./Dockerfile#L32-L35).
 
 #### Usage
 ```
