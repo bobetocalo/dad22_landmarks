@@ -88,7 +88,7 @@ class Dad22Landmarks(Alignment):
         from pytorch_toolbelt.utils import read_rgb_image
         from scipy.spatial.transform import Rotation
         from pcr_framework.src.datasets import Database
-        from pcr_framework.src.annotations import GenericLandmark
+        from pcr_framework.src.annotations import PersonObject, GenericLandmark
         from pcr_framework.regression.alignment.landmarks import lps
         from .model_training.model.flame import FlameParams, FLAME_CONSTS
         from .model_training.model.utils import rot_mat_from_6dof
@@ -100,6 +100,8 @@ class Dad22Landmarks(Alignment):
             # Load image
             image = read_rgb_image(img_pred.filename)
             for obj_pred in img_pred.objects:
+                if not isinstance(obj_pred, PersonObject):
+                    continue
                 # Generate prediction
                 bbox_scale = 1.3
                 bbox_width, bbox_height = obj_pred.bb[2]-obj_pred.bb[0], obj_pred.bb[3]-obj_pred.bb[1]
